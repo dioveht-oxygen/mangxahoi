@@ -3,6 +3,8 @@ var express = require('express');
 var app = express();
 var mysql = require('mysql');
 var ejs = require('ejs');
+var Help = require('./Help');
+
 const bodyParser = require("body-parser");
 
 var chuyen_doi_danh_gia_bai_bang = 0;
@@ -127,39 +129,48 @@ app.post('/Home/success', function (req, res) {
     });
 });
 */
+
 app.get('/log-in', function (req, res) {
     res.sendFile(__dirname + "/Log-in.html");
 });
+
+/*=============================== trang chính ===============================*/
 // gửi coookie lên server
 app.get('/', function (req, res) {
     res.sendFile(__dirname + "/kiem-tra-cookie.html");
 });
+
 // kiểm tra cookie và trả dữ liệu
-app.get('/cookie', function (req, res) {
+app.get('/cookie', async function (req, res) {
     var gia_tri = req.query.gia_tri_cookie;
+    gia_tri = gia_tri.trim();
+
     if (gia_tri == "undefined") {
         res.redirect('/log-in');
+        return;
     }
-    else {
-        console.log('gia tri cua token la ' + gia_tri);
-        conn.query(`SELECT * FROM cookie where token = '${gia_tri}' `, function (err, rows, fields) {
-            if (err) throw err;
-            if (rows.length == 0) res.redirect('/log-in');
-            var gia_tri_token = rows[0].token;
-            var user_token = rows[0].username;
-            if (gia_tri == gia_tri_token) {
-                conn.query(`SELECT * FROM nguoidung where  username= '${user_token}' `, function (err, rows, fields) {
-                    if (err) throw err;
-                    var ten_hien_thi = rows[0].lastname + " " + rows[0].firstname;
-                    var gioi_tinh = rows[0].sex;
-                    var email = rows[0].email;
-                    var namsinh = rows[0].birthday;
-                    //res.send("1 ;" + user_token + ";"+ten_hien_thi + ";"+gioi_tinh + ";"+email + ";"+namsinh);
-                    res.redirect('/gui-thong-tin-nguoi-dang-nhap');
-                });
-            }
-        });
+
+    console.log('gia tri cua token la ' + gia_tri);
+
+    let rows = await Help.sql(`SELECT * FROM cookie where token = '${gia_tri}' `);
+
+    console.log(rows);
+
+    if (rows.length === 0) {
+        console.log('Khong tim thay cookie, yeu cau dang nhap lai');
+        res.redirect('/log-in');
+        return;
     }
+
+    // let user_token = rows[0].username;
+    // rows = await Help.sql(`SELECT * FROM nguoidung where  username= '${user_token}' `);
+    // var ten_hien_thi = rows[0].lastname + " " + rows[0].firstname;
+    // var gioi_tinh = rows[0].sex;
+    // var email = rows[0].email;
+    // var namsinh = rows[0].birthday;
+    //res.send("1 ;" + user_token + ";"+ten_hien_thi + ";"+gioi_tinh + ";"+email + ";"+namsinh);
+
+    res.redirect('/gui-thong-tin-nguoi-dang-nhap');
 });
 
 /*
@@ -190,61 +201,53 @@ function RandomString() {
     return text;
 }
 
-app.post("/Log-on", (req, res) => {
+// Người dùng đăng nhập, hệ thống kiểm tra xe tên đăng nhập và mật khẩu đã đúng chưa.
+app.post("/Log-on", async (req, res) => {
     var user = req.body.user;
     var pass = req.body.password;
-    conn.query(`select * from nguoidung where username = '${user}' and pass = '${pass}'`,
-        (err, rows, fields) => {
-            if (err) throw err;
-            var user_sql = rows[0].username;
-            var pass_sql = rows[0].pass;
-            var chuoi = RandomString();
-            if (user == user_sql && pass == pass_sql) {
-                conn.query(`SELECT * FROM nguoidung where  username= '${user}' `,
-                    (err, rows, fields) => {
-                        if (err) throw err;
-                        console.log('chuan bi update cookie');
-                    if( rows.length == 0){
-                        var str = `INSERT INTO cookie(username,token) VALUES ('${user}','${chuoi}')`;
-                        conn.query(str, function (err, results, fields) {
-                            if (err) throw err;
-                        });
-                    }
-                    else{
-                        var str = `update cookie set username='${user_sql}',token='${chuoi}' `;
-                        conn.query(str, function (err, results, fields) {
 
-                            if(err) throw err;
-                        });
-                    }
-                    conn.query(`SELECT * FROM nguoidung where  username= '${user}' `,
-                        (err, rows, fields) => {
-                            if (err) throw err;
-                            var ten_user = rows[0].lastname + " " + rows[0].firstname;
-                            var gioi_tinh = rows[0].sex;
-                            var email = rows[0].email;
-                            var namsinh = rows[0].birthday;
-                            var ten_hien_thi = rows[0].tenhienthi;
+    let rows = await Help.sql(`select * from nguoidung where username = '${user}' and pass = '${pass}'`);
 
-                            var bien = {
-                                chuoi_ngau_nhien: chuoi,
-                                username: user_sql,
-                                ten_nguoi_dung: ten_user,
-                                gioi_tinh: gioi_tinh,
-                                email: email,
-                                nam_sinh: namsinh,
-                                ten_hien_thi: ten_hien_thi
-                            };
-                            ejs.renderFile('success.html', bien, null, function (err, str) {
-                                if (err) throw err;
-                                res.send(str);
-                            });
-                            //res.redirect('/home');
-                        }
-                    );
-                });
-            }
-        });
+    var user_sql = rows[0].username;
+    var pass_sql = rows[0].pass;
+    var chuoi = RandomString();
+
+    if (user != user_sql || pass != pass_sql) {
+        res.send('Dang nhap that bai');
+        return;
+    }
+
+    rows = await Help.sql(`SELECT * FROM nguoidung where  username= '${user}' `);
+
+    console.log('chuan bi update cookie');
+
+    if( rows.length === 0)
+        await Help.sql(`INSERT INTO cookie(username,token) VALUES ('${user}','${chuoi}')`);
+    else
+        await Help.sql(`update cookie set username='${user_sql}',token='${chuoi}' `);
+
+    rows = await Help.sql(`SELECT * FROM nguoidung where  username= '${user}' `);
+
+    var ten_user = rows[0].lastname + " " + rows[0].firstname;
+    var gioi_tinh = rows[0].sex;
+    var email = rows[0].email;
+    var namsinh = rows[0].birthday;
+    var ten_hien_thi = rows[0].tenhienthi;
+
+    var bien = {
+        chuoi_ngau_nhien: chuoi,
+        username: user_sql,
+        ten_nguoi_dung: ten_user,
+        gioi_tinh: gioi_tinh,
+        email: email,
+        nam_sinh: namsinh,
+        ten_hien_thi: ten_hien_thi
+    };
+    ejs.renderFile('success.html', bien, null, function (err, str) {
+        if (err) throw err;
+        res.send(str);
+    });
+    //res.redirect('/home');
 });
 
 
