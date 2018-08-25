@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="test"></div>
+<script>
+    function xetCookie(){
+        var ca = document.cookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            console.log(ca[i]);
+            if(ca[i].indexOf("Doiveht") > 0){
+                return ca[i];
+            }
+        }
+        return ;
+    }
+    var gia_tri_cookie = xetCookie();
+    function Redirect(){
+        console.log(gia_tri_cookie);
+        window.location="http://localhost:3000/cookie/?gia_tri_cookie="+ gia_tri_cookie+"";
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        Redirect();
+    });
+</script>
+</body>
+</html>

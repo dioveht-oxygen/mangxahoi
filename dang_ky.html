@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký thành viên</title>
+    <link href="/giaodien/Style.css" rel="stylesheet">
+    <script type="text/javascript" src="/giaodien/index.js"></script>
+    <script type="text/javascript" src="/giaodien/Hieu_Ung_Roi.js"></script>
+</head>
+<body>
+    <form action="/Home/success" method="post" onsubmit="return kiem_tra_form_dang_ky()" name="dang_ky" id="dang_ky">
+        <div><h1>Đăng ký thành viên</h1></div>
+        <div id="form_dk">
+            <div id="name_form-dk">
+                <div><label><h3>Họ</h3></label><input type="text" name="ho" maxlength="16" ></div>
+                <div><label><h3>Tên</h3></label><input type="text" name="ten" maxlength="16"></div>
+            </div>
+            <div id="gt_form-dk">
+                    <div><h3>Giới tính</h3></div>
+                    <div>
+                        <label>Nam<input type="radio" value="Nam" name="gt"></label>
+                    </div>
+                    <div>
+                        <label>Nữ<input type="radio" value="Nữ" name="gt"></label>
+                    </div>
+            </div>
+            <div id="bday_form-dk">
+                <label><h3>Năm sinh</h3><input type="date" name="ngay_sinh"></label>
+            </div>
+            <div id="tai_khoan_form-dk">
+                <label><h3>Tài Khoản</h3><input type="text" name="user" maxlength="16" onkeyup="kiem_tra_nhap_ky_tu(document.dang_ky.user)"></label>
+            </div>
+            <div id="mat_khau_form-dk">
+                <label><h3>Mật Khẩu</h3><input type="password" name="pass" maxlength="20" onkeyup="kiem_tra_nhap_ky_tu(document.dang_ky.pass)"></label>
+            </div>
+            <div id="email_form-dk">
+                <label><h3>Email</h3><input type="text" name="email" onkeyup="kiem_tra_nhap_ky_tu(document.dang_ky.email)"></label>
+            </div>
+            <div id="btt_form-dk">
+                <button type="submit">Đăng ký</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

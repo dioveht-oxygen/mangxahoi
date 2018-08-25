@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Trang cá nhân</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/giaodien/Style.css"/>
+    <script src="giaodien/index.js">
+    </script>
+</head>
+<body>
+    <header>
+        <div>
+            <div id="tcn_tag">
+                <div>
+                    <img src="giaodien/images/Logowhite.png">
+                </div>
+                <div id="tcn_ten">
+                    <h1><%= ten_nguoi_dang_nhap %></h1>
+                </div>
+                <div>
+                    <ul id="tcn_cac_muc">
+                        <li onclick="lua_chon(this)" >Đăng bài</li>
+                        <li onclick="lua_chon(this)" class="chon" >Thông tin cá nhân</li>
+                        <li onclick="lua_chon(this)">Info</li>
+                        <li onclick="lua_chon(this)">Điều lệ</li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div id="tcn-noi_dung">
+                    <div id="tcn-dang_bai" class="hide" >
+                        <div>
+                            <form method="post" id="dang_bai" action="/trang-ca-nhan">
+                                <div>
+                                    <div>
+                                        <p>*chú ý</p>
+                                        <p>-Không nên đăng bài phản động</p>
+                                        <p>-Không nên đăng bài gây kích động</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <textarea name="noi_dung" id="noi_dung_bai_dang" placeholder="Nội dung" cols="13" rows="20" ></textarea>
+                                    <button type="submit">Đăng</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="tcn-thong_tin">
+                        <div>
+                            <ul>
+                                <li>Tên Thật </li>
+                                <li>Tuổi </li>
+                                <li>Sinh vào </li>
+                                <li>email </li>
+                            </ul>
+                            <ul>
+                                <li>: </li>
+                                <li>: </li>
+                                <li>: </li>
+                                <li>: </li>
+                            </ul>
+                            <ul>
+                                <li><%= ten_nguoi_dang_nhap %></li>
+                                <li><%= tuoi %></li>
+                                <li><%= ngay_sinh %></li>
+                                <li><%= email %></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="tcn-info" class="hide">
+                        <div>
+                            Đây là trang mạnh xã hội được xây dựng ẩn danh cho người dùng,bạn có thể thoải mái đăng bài
+                            nhưng sẽ bị giới hạn tuổi lẫn việc xem bài.
+                        </div>
+                    </div>
+                    <div id="tcn-dieu_le" class="hide">
+                        <div>
+                            ....Đang cập nhật....
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <footer>
+        <div id="footer">
+            Copyrigth &copy2019-2020  Liên hệ :  <a href="https://www.facebook.com/nhamnhi.kuso">Txise Doiveht</a>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<html lang="vi">
+	<head>
+		<title>House</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/giaodien/Style.css"/>
+        <script src="giaodien/index.js">
+        </script>
+</head>
+	<body style="background-color: gainsboro">
+		<div id="thanh_menu-home">
+			<ul id="danh_muc-home">
+				<li id="bieu_tuong_danh_muc-home">
+					<a class="chulk" href="https://www.facebook.com/nhamnhi.kuso">Doiveht</a>
+				</li>
+				<li id="font_tiem_kiem_danh_muc-home">
+					<form id="form_tim_kiem-home" action="/Home/Seach" method="get">
+						<input type="text" name="Search" placeholder="Tìm kiếm" ><button type="submit">Search</button>
+					</form>
+				</li>
+				<li id="tag_danh_muc-home">
+                    <ul>
+                        <li><span><a href="#" class="chulk">Home</a></span></li>
+                        <li><span><a href="/trang-ca-nhan?user=<%= user %>" class="chulk"><%= ten_nguoi_dang_nhap %></a></span></li>
+                        <li><span><a href="#" class="chulk">Mở rộng</a></span>
+                            <ul id="drop_menu-home">
+                                <li><a href="#"><img src="/giaodien/images/icon/vuong_niem.png" style="width: 20%;"><br> Bảng xếp hạng</a></li>
+                                <li><a href="#">Thông báo</a></li>
+                                <hr>
+                                <li><a href="/Home/Log-in">Đăng xuất</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+				</li>
+			</ul>
+		</div>
+		<div id="phan_nd-home">
+			<div id="tuong_tac-home">
+                <div id="ds_tuong_tac-home">
+                    <ul>
+                        <li>
+                            <img src="giaodien/images/Logowhite.png" class="hinh_dai_dien">
+                        </li>
+                        <li>
+                            <ul>
+                                <li><a href="/trang-ca-nhan"><h3><%= ten_nguoi_dang_nhap %></h3></a></li>
+                                <li><a href="#">Đăng bài</a></li>
+                                <li><a href="#">Bộ sưu tập</a></li>
+                                <li><a href="#">Đánh dấu</a></li>
+                                <li><a href="#">Bạn bè</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+			</div>
+            <div class="noi_dung">
+                <div>
+                    <div class="noi-dung-bai-dang">
+                        <div class="noi-dung">
+                            <div class="tieu-de">
+                                <div>
+                                    <img src="giaodien/images/Logoblack.png" class="hinh-dai-dien-bai-dang">
+                                </div>
+                                <div class="ten-nguoi-dang">
+                                    <h2><a href="trang-ca-nhan.html"><%= ten_nguoi_dang_nhap %></a></h2>
+                                </div>
+                            </div>
+                            <div>
+                                1 giờ trước
+                            </div>
+                            <div>
+                                <%= baidang[0].noidung %>
+                            </div>
+                        </div>
+                        <div class="tuong-tac-noi-dung">
+                            <div>
+                                <a href="#" class="tuong-tac-thich" onclick="tuong_tac_thich_binh_luan()" id="thich-danh-gia">Thích</a><span id="so-thich"></span>
+                            </div>
+                            <div>
+                                <a href="#"><label for="tra-loi-binh-luan">Bình luận</label></a>
+                            </div>
+                        </div>
+                        <div class="binh-luan" id="phan-binh-luan">
+                            <div>
+                                <div>
+                                    <div class="tieu-de">
+                                        <div>
+                                            <img src="giaodien/images/Logowhite.png" class="hinh-dai-dien-bai-dang">
+                                        </div>
+                                        <div class="ten-nguoi-dang">
+                                            <a href="trang-ca-nhan.html">Tsixe</a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>
+                                    </div>
+                                </div>
+                                <div class="tuong-tac-binh-luan">
+                                    <div>
+                                        <a href="#" id="thich-danh-gia-binh-luan" class="tuong-tac-thich" onclick="tuong_tac_thich_tra_loi_binh_luan()">thích</a><span id="so-thich-binh-luan"></span>
+                                    </div>
+                                    <div>
+                                        <label for="tra-loi-binh-luan">trả lời</label>
+                                    </div>
+                                </div>
+                                <div class="tra-loi-binh-luan">
+                                    <div>
+                                        <div><img src="giaodien/images/Untitled.png" class="hinh-dai-dien-bai-dang"></div>
+                                        <div><input type="text" id="tra-loi-binh-luan" name="binh-luan" ></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cong-cu">
+                            <div>
+                                <ul>
+                                    <li class="tro-cong-cu">...
+                                        <ul class="cong-cu-tag">
+                                            <li>báo cáo</li>
+                                            <li>đánh dấu</li>
+                                            <li>.....</li>
+                                            <li>.....</li>
+                                            <li>.....</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="hien-thi-binh-luan" onclick="hien_thi_binh_luan()">
+                            <p id="hien-thi-binh-luan">ẩn bình luận</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div id="thanh_td-home">
+                <div id="bo_phan_td-home">
+                    <div onclick="hien_thi_ban_be()">
+                        <a href="#" id="hien-thi-ban-be">ẩn</a>
+                    </div>
+                    <ul id="danh_sach_ban">
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                        <li title="mong manh trong vắng"><a href="/Home/xem">mong manh trong vắng</a></li>
+                    </ul>
+                </div>
+			</div>
+		</div>
+	</body>
+</html>
